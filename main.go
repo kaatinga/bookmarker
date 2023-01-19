@@ -1,9 +1,9 @@
 package bookmarker
 
 import (
+	"bytes"
 	"golang.org/x/net/html"
 	"io"
-	"strings"
 )
 
 type Bookmark struct {
@@ -14,8 +14,8 @@ type Bookmark struct {
 }
 
 // ParseExportedGoogleBookmarks parses the html document and returns the bookmarks.
-func ParseExportedGoogleBookmarks(input string) (map[string][]Bookmark, error) {
-	tokenizer := html.NewTokenizer(strings.NewReader(input))
+func ParseExportedGoogleBookmarks(input []byte) (map[string][]Bookmark, error) {
+	tokenizer := html.NewTokenizer(bytes.NewReader(input))
 
 	var currentTag, currentCategory string
 	var initNewBookmark = false
